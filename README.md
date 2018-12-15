@@ -2,6 +2,7 @@
 The project dual-attention based LSTM is based on this paper:
 https://arxiv.org/pdf/1704.02971.pdf
 
+Used stock prices of apple, adobe, amazon, microsoft and netflix to predict Netflix stock price
 
 ![image](https://github.com/XingguangZhang/ECE629-neraul-networks/blob/master/images/fitting.png)
 
