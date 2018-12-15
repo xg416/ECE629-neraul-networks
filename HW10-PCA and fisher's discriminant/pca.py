@@ -2,7 +2,7 @@
 """
 Created on Wed Nov 14 14:59:26 2018
 
-@author: 张星光
+@author: Xingguang Zhang
 """
 import os
 import numpy as np
