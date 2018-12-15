@@ -18,8 +18,8 @@ from data_creation import create_dataset, read_data
 from dual_attention import first_attention, second_attention
 
 def scheduler(epoch):
-    # every xx epochs, lr reduced to 20%
-    if epoch % 30 == 0 and epoch != 0:
+    # every 20 epochs, lr reduced to 20%
+    if epoch % 20 == 0 and epoch != 0:
         lr = K.get_value(model.optimizer.lr)
         K.set_value(model.optimizer.lr, lr * 0.2)
         print("lr changed to {}".format(lr * 0.2))
@@ -27,7 +27,8 @@ def scheduler(epoch):
 
 np.random.seed(8)
 path = 'full_non_padding.csv'
-sample_step = 100
+#sample the data for every 20 minutes to reduce the amount of data
+sample_step = 5
 #apple, adobe, amazon,microsoft,netflix
 in_column = (1,2,11,62,67)
 out_column = 67
@@ -38,6 +39,7 @@ for i in range(np.size(in_column)):
     if in_column[i] == out_column:
         label_column = i
         break
+        
 data = read_data(path, sample_step, in_column)
 data_attention = np.reshape(data[:,label_column] ,(-1, 1))
 #create dataset
@@ -78,7 +80,7 @@ model = Model(inputs = [In1, Iny, h0, s0, hd0, sd0], outputs = Y)
 optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 model.compile(loss='mean_squared_error', optimizer = optimizer)
 #model.summary()
-model.fit([trainX, trainY, h_init, s_init, hd_init, sd_init], train_label, epochs=150, batch_size=128, \
+model.fit([trainX, trainY, h_init, s_init, hd_init, sd_init], train_label, epochs=120, batch_size=128, \
           callbacks=[reduce_lr], verbose=1, shuffle=False)
 
 trainPredict = model.predict([trainX, trainY, h_init, s_init, hd_init, sd_init])
