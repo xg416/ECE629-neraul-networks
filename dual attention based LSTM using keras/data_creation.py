@@ -44,6 +44,7 @@ def read_data(path, steps, no_column):
     data = whole[::steps,no_column]
     data = np.reshape(data, [np.size(data,0),np.size(no_column)])
     for k in range(data.shape[1]):
+        # for the unrecorded data(nan), padding it with that of the previous time step 
         for i in range(data.shape[0]):
             if np.isnan(data[i,k]):
                 data[i,k] = data[i-1,k]
